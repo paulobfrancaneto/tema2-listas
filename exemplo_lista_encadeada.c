@@ -6,6 +6,33 @@ struct No {
     struct No* proximo;
 };
 
+
+void inserirNoInicio(struct No** inicio, int valor) {
+    /* Aloca memória para o novo nó */
+    struct No* novo = (struct No*) malloc(sizeof(struct No));
+
+    /* Verifica se a alocação falhou (retornou NULL).
+       Se falhar, imprime mensagem de erro e retorna sem modificar a lista.
+       Não tentamos acessar 'novo' se for NULL para evitar comportamento indefinido. */
+    if (novo == NULL) {
+        fprintf(stderr, "Erro: falha na alocação de memória ao inserir no início da lista.\n");
+        return;
+    }
+
+    /* Inicializa campos do novo nó e o insere no início */
+    novo->dado = valor;
+    novo->proximo = *inicio;
+    *inicio = novo;
+} 
+
+void removerDoInicio(struct No** inicio) {
+    if (*inicio != NULL) {
+        struct No* temp = *inicio;
+        *inicio = (*inicio)->proximo;
+        free(temp);
+    }
+} 
+
 int main() {
     struct No* primeiro = (struct No*) malloc(sizeof(struct No));
     struct No* segundo = (struct No*) malloc(sizeof(struct No));
